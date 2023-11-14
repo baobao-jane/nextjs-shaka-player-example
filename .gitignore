@@ -40,7 +40,11 @@ yarn.lock
 .yarnrc.yml
 
 ##git rm -r --cached .
-.yarn
 .pnp.*
 .yarn/*
-
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
