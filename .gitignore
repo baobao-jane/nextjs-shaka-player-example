@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
@@ -20,10 +18,13 @@
 *.pem
 
 # debug
+.yarn/*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
 
 # local env files
 .env*.local
@@ -33,19 +34,4 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-
-# .lock
-package-lock.json
-yarn.lock
-.yarnrc.yml
-
-##git rm -r --cached .
-.yarn/*
-!.yarn/patches
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-.pnp.
-
-
+next-env.d.ts
