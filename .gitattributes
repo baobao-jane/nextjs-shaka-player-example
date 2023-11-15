@@ -1,2 +1,2 @@
-.yarn/* filter=lfs diff=lfs merge=lfs -text
 .yarn/** filter=lfs diff=lfs merge=lfs -text
+.yarn/* filter=lfs diff=lfs merge=lfs -text
