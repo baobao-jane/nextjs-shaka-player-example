@@ -1,18 +1,29 @@
 import Head from 'next/head';
-import { Inter } from 'next/font/google';
+import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
-const ShakaPlayerExample = dynamic(() => import('@/src/component/shaka-player/shaka-player-example'), { ssr: false });
-
-const inter = Inter({ subsets: ['latin'] });
+import { isSafari, isChrome } from 'react-device-detect';
+const ShakaPlayerExample = dynamic(() => import('src/component/shaka-player/shaka-player-example'), { ssr: false });
+const ShakaPlayerFairplayExample = dynamic(() => import('src/component/shaka-player/shaka-player-fairplay-example'), {
+  ssr: false,
+});
 
 export default function Home() {
+  useEffect(() => {
+    if (isChrome) {
+      alert('your browser is Chrome');
+    }
+    if (isSafari) {
+      alert('your browser is Safari');
+    }
+  }, []);
+
   return (
     <>
       <Head>
-        <title>Next.js shaka player example</title>
+        <title>Next.js shaka player widevine & fairplay example</title>
       </Head>
       <main>
-        <ShakaPlayerExample />
+        {isChrome && <ShakaPlayerExample />} {isSafari && <ShakaPlayerFairplayExample />}
       </main>
     </>
   );

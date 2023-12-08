@@ -14,12 +14,14 @@ const ShakaPlayerExample: FC = () => {
     shaka.polyfill.installAll();
     const player = new shaka.Player(videoRef.current as HTMLVideoElement);
 
-    if (player) {
-      new shaka.ui.Overlay(
-        player,
-        videoContainerRef.current as HTMLElement,
-        videoRef.current as HTMLVideoElement,
-      ).getControls();
+    if (player && videoContainerRef.current && videoRef.current) {
+      // if you want to use more ui options
+      const uiConfig = {
+        overflowMenuButtons: ['captions', 'cast', 'playback_rate', 'language', 'picture_in_picture'],
+      };
+      const ui = new shaka.ui.Overlay(player, videoContainerRef.current, videoRef.current);
+      ui.configure(uiConfig); //configure UI
+      ui.getControls();
 
       player.configure({
         abr: { enabled: true },
@@ -33,6 +35,8 @@ const ShakaPlayerExample: FC = () => {
         .then(function () {
           // This runs if the asynchronous load is successful.
           console.log('The video has now been loaded!');
+          //if you want to use subtitle, using  addTextTrackAsync(); this function has to use after load()
+          player.addTextTrackAsync('your subtitle url', 'your subtitle language', 'subtitle', 'text/vtt');
         })
         .catch(onError); // onError is executed if the asynchronous load fails.
     }

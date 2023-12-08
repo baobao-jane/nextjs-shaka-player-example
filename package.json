@@ -9,16 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "14.0.2",
-    "react": "^18",
-    "react-dom": "^18",
-    "shaka-player": "^4.4.1"
-  },
-  "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "typescript": "^5.2.2"
+    "@types/react": "17.0.30",
+    "@types/react-dom": "18.0.5",
+    "next": "14.0.2",
+    "react": "18.1.0",
+    "react-device-detect": "^2.2.3",
+    "react-dom": "18.1.0",
+    "shaka-player": "^4.6.2"
   },
-  "packageManager": "yarn@4.0.1"
+  "resolutions": {
+    "@types/react": "17.0.30"
+  },
+  "packageManager": "yarn@4.0.1",
+  "devDependencies": {
+    "typescript": "4.4.4"
+  }
 }
