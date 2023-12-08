@@ -32,7 +32,7 @@ const ShakaPlayerFairPlayExample: FC = () => {
         abr: { enabled: true },
         drm: {
           servers: {
-            'com.apple.fps': 'licenseServer',
+            'com.apple.fps': licenseServer,
           },
           advanced: {
             'com.apple.fps': {
