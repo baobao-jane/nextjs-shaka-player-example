@@ -16,82 +16,125 @@ const ShakaPlayerFairPlayExample: FC = () => {
     shaka.polyfill.installAll();
     shaka.polyfill.PatchedMediaKeysApple.install();
     const player = new shaka.Player(videoRef.current as HTMLVideoElement);
-
-    if (player && videoContainerRef.current && videoRef.current) {
-      // if you want to use more ui options
-      const uiConfig = {
-        overflowMenuButtons: ['captions', 'airplay', 'playback_rate', 'language', 'picture_in_picture'],
-      };
-      const ui = new shaka.ui.Overlay(player, videoContainerRef.current, videoRef.current);
-      ui.configure(uiConfig); //configure UI
-      ui.getControls();
-
-      const fairplayCert = getFairplayCert();
-
-      player.configure({
-        abr: { enabled: true },
-        drm: {
-          servers: {
-            'com.apple.fps': licenseServer,
-          },
-          advanced: {
-            'com.apple.fps': {
-              serverCertificate: fairplayCert,
-            },
-          },
-        },
-        streaming: {
-          useNativeHlsOnSafari: true,
-        },
-      });
-
-      //@ts-ignore
-      player.getNetworkingEngine().registerRequestFilter(function (type, request) {
-        if (type == shaka.net.NetworkingEngine.RequestType.LICENSE) {
-          //@ts-ignore
-          const originalPayload = new Uint8Array(request.body);
-          const base64Payload = shaka.util.Uint8ArrayUtils.toBase64(originalPayload);
-          const params = 'spc=' + encodeURIComponent(base64Payload);
-          request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-          request.body = shaka.util.StringUtils.toUTF8(params);
-        } else if (
-          type == shaka.net.NetworkingEngine.RequestType.MANIFEST ||
-          type == shaka.net.NetworkingEngine.RequestType.SEGMENT
-        ) {
-          // allow cookies to be sent cross-origin
-          request.allowCrossSiteCredentials = true;
-        } else {
-          return;
-        }
-      });
-
-      //@ts-ignore
-      player.getNetworkingEngine().registerResponseFilter((type, response) => {
-        if (type == shaka.net.NetworkingEngine.RequestType.LICENSE) {
-          let responseText = shaka.util.StringUtils.fromUTF8(response.data);
-          // Trim whitespace.
-          responseText = responseText.trim();
-          // Look for <ckc> wrapper and remove it.
-          if (responseText.substr(0, 5) === '<ckc>' && responseText.substr(-6) === '</ckc>') {
-            responseText = responseText.slice(5, -6);
-          }
-          // Decode the base64-encoded data into the format the browser expects.
-          response.data = shaka.util.Uint8ArrayUtils.fromBase64(responseText).buffer;
-        }
-      });
-
-      player
-        .load(manifestUri)
-        .then(function () {
-          // This runs if the asynchronous load is successful.
-          console.log('The video has now been loaded!');
-
-          //if you want to use subtitle, using  addTextTrackAsync(); this function has to use after load()
-          player.addTextTrackAsync('your subtitle url', 'your subtitle language', 'subtitle', 'text/vtt');
-        })
-        .catch(onError); // onError is executed if the asynchronous load fails.
-    }
+    checkSupportedDRM().then(function () {
+      initPlayer(player, videoRef.current as HTMLVideoElement, videoContainerRef.current as HTMLElement);
+    });
   }, []);
+
+  const initPlayer = async (player: shaka.Player, video: HTMLVideoElement, videoContainer: HTMLElement) => {
+    // if you want to use more ui options
+    const uiConfig = {
+      overflowMenuButtons: ['captions', 'airplay', 'playback_rate', 'language', 'picture_in_picture'],
+    };
+    const ui = new shaka.ui.Overlay(player, videoContainer, video);
+    ui.configure(uiConfig); //configure UI
+    ui.getControls();
+
+    const fairplayCert = getFairplayCert();
+
+    player.configure({
+      abr: { enabled: true },
+      drm: {
+        servers: {
+          'com.apple.fps': licenseServer,
+        },
+        advanced: {
+          'com.apple.fps': {
+            serverCertificate: fairplayCert,
+          },
+        },
+      },
+      streaming: {
+        useNativeHlsOnSafari: true,
+      },
+    });
+
+    //@ts-ignore
+    player.getNetworkingEngine().registerRequestFilter(function (type, request) {
+      if (type == shaka.net.NetworkingEngine.RequestType.LICENSE) {
+        //@ts-ignore
+        const originalPayload = new Uint8Array(request.body);
+        const base64Payload = shaka.util.Uint8ArrayUtils.toBase64(originalPayload);
+        const params = 'spc=' + encodeURIComponent(base64Payload);
+        request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        request.body = shaka.util.StringUtils.toUTF8(params);
+      } else if (
+        type == shaka.net.NetworkingEngine.RequestType.MANIFEST ||
+        type == shaka.net.NetworkingEngine.RequestType.SEGMENT
+      ) {
+        // allow cookies to be sent cross-origin
+        request.allowCrossSiteCredentials = true;
+      } else {
+        return;
+      }
+    });
+
+    //@ts-ignore
+    player.getNetworkingEngine().registerResponseFilter((type, response) => {
+      if (type == shaka.net.NetworkingEngine.RequestType.LICENSE) {
+        let responseText = shaka.util.StringUtils.fromUTF8(response.data);
+        // Trim whitespace.
+        responseText = responseText.trim();
+        // Look for <ckc> wrapper and remove it.
+        if (responseText.substr(0, 5) === '<ckc>' && responseText.substr(-6) === '</ckc>') {
+          responseText = responseText.slice(5, -6);
+        }
+        // Decode the base64-encoded data into the format the browser expects.
+        response.data = shaka.util.Uint8ArrayUtils.fromBase64(responseText).buffer;
+      }
+    });
+
+    await player
+      .load(manifestUri)
+      .then(function () {
+        // This runs if the asynchronous load is successful.
+        console.log('The video has now been loaded!');
+
+        //if you want to use subtitle, using  addTextTrackAsync(); this function has to use after load()
+        player.addTextTrackAsync('your subtitle url', 'your subtitle language', 'subtitle', 'text/vtt');
+      })
+      .catch(onError); // onError is executed if the asynchronous load fails.
+  };
+
+  const checkSupportedDRM = async () => {
+    let supportedDRMType = '';
+    const config = [
+      {
+        initDataTypes: ['cenc', 'sinf', 'skd'],
+        audioCapabilities: [
+          {
+            contentType: 'audio/mp4;codecs="mp4a.40.2"',
+          },
+        ],
+        videoCapabilities: [
+          {
+            contentType: 'video/mp4;codecs="avc1.42E01E"',
+          },
+          {
+            contentType: 'video/mp4;codecs="avc1.640028"',
+          },
+          {
+            contentType: 'video/mp4;codecs="avc1.4d401f"',
+          },
+        ],
+      },
+    ];
+    try {
+      await navigator
+        //@ts-ignore
+        .requestMediaKeySystemAccess('com.apple.fps', config)
+        .then((mediaKeySystemAccess) => {
+          //@ts-ignore
+          supportedDRMType = DrmType.FAIRPLAY;
+          console.log(supportedDRMType + ' support ok');
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const getFairplayCert = () => {
     var xmlhttp;
