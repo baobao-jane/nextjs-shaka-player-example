@@ -13,7 +13,7 @@ import dynamic from 'next/dynamic';
 
 Shaka Player doesn't have built-in TypeScript support. Therefore, you have to create a global.d.ts file to provide TypeScript support. Additionally, check the tsconfig.json file and ensure the following options are included:
 
-```
+```json
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "global.d.ts"],
   "exclude": ["node_modules"],
   "moduleFileExtensions": ["ts", "tsx", "js", "jsx"]
