@@ -1,5 +1,22 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+# nextjs-shaka-player-example
+
+This simple project contains implementation of shaka player with Next.js and Typescript. Since NextJS has built-in support for SSR, and shaka player doesnt support it, you need to load shaka player with -
+
+```
+import dynamic from 'next/dynamic';
+```
+
+The shaka player dosen't support with typescript. So, you have to make global.d.ts file for support with it.
+And, you need to check tsconfig.json and add below options.
+
+```
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "global.d.ts"],
+  "exclude": ["node_modules"],
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx"]
+```
+
 ## Getting Started
 
 First, run the development server:
@@ -38,7 +55,3 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-# nextjs-shaka-player-example
-
-
