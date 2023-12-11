@@ -2,14 +2,16 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 # nextjs-shaka-player-example
 
-This simple project contains implementation of shaka player with Next.js and Typescript. Since NextJS has built-in support for SSR, and shaka player doesnt support it, you need to load shaka player with -
+This simple project contains the implementation of Shaka Player with Next.js and TypeScript.
+This example includes support for Widevine and FairPlay DRM."
 
-```
+Since Next.js has built-in support for SSR, and Shaka Player doesn't support it, you need to load Shaka Player with:
+
+```javascript
 import dynamic from 'next/dynamic';
 ```
 
-The shaka player dosen't support with typescript. So, you have to make global.d.ts file for support with it.
-And, you need to check tsconfig.json and add below options.
+Shaka Player doesn't have built-in TypeScript support. Therefore, you have to create a global.d.ts file to provide TypeScript support. Additionally, check the tsconfig.json file and ensure the following options are included:
 
 ```
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "global.d.ts"],
@@ -17,7 +19,14 @@ And, you need to check tsconfig.json and add below options.
   "moduleFileExtensions": ["ts", "tsx", "js", "jsx"]
 ```
 
+This version aims to improve the clarity and readability of your instructions.
+
 ## Getting Started
+
+```bash
+git clone https://github.com/your-username/nextjs-shaka-player-example.git
+cd nextjs-shaka-player-example
+```
 
 First, run the development server:
 
