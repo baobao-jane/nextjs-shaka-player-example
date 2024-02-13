@@ -16,7 +16,6 @@ Shaka Player doesn't have built-in TypeScript support. Therefore, you have to cr
 ```json
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "global.d.ts"],
   "exclude": ["node_modules"],
-  "moduleFileExtensions": ["ts", "tsx", "js", "jsx"]
 ```
 
 This version aims to improve the clarity and readability of your instructions.
