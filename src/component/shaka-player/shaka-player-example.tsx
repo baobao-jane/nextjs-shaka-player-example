@@ -1,12 +1,10 @@
 import { FC, useEffect, useRef } from 'react';
 import 'shaka-player/dist/controls.css';
 import shaka from 'shaka-player/dist/shaka-player.ui';
-import { LimeplayProvider, MediaOutlet, useLimeplay } from '@limeplay/core';
 
 const ShakaPlayerExample: FC = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const videoContainerRef = useRef<HTMLElement | null>(null);
-  const { player } = useLimeplay();
 
   const licenseServer = 'https://widevine-proxy.appspot.com/proxy';
   const manifestUri = 'https://dash.akamaized.net/dash264/TestCases/1c/qualcomm/2/MultiRate.mpd';
@@ -25,14 +23,14 @@ const ShakaPlayerExample: FC = () => {
     shaka.polyfill.installAll();
     const player = new shaka.Player(videoRef.current as HTMLVideoElement);
 
-    if (player && videoRef.current) {
+    if (player && videoRef.current && videoContainerRef.current) {
       // if you want to use more ui options
-      // const uiConfig = {
-      //   overflowMenuButtons: ['captions', 'cast', 'playback_rate', 'language', 'picture_in_picture'],
-      // };
-      // const ui = new shaka.ui.Overlay(player, videoContainerRef.current, videoRef.current);
-      // ui.configure(uiConfig); //configure UI
-      // ui.getControls();
+      const uiConfig = {
+        overflowMenuButtons: ['captions', 'cast', 'playback_rate', 'language', 'picture_in_picture'],
+      };
+      const ui = new shaka.ui.Overlay(player, videoContainerRef.current, videoRef.current);
+      ui.configure(uiConfig); //configure UI
+      ui.getControls();
 
       player.configure({
         abr: { enabled: true },
@@ -69,22 +67,20 @@ const ShakaPlayerExample: FC = () => {
   };
 
   return (
-    // <div
-    //   className="video-container"
-    //   id="video-container"
-    //   style={{
-    //     marginLeft: 'auto',
-    //     marginRight: 'auto',
-    //     maxWidth: 1500,
-    //     width: '100%',
-    //     marginTop: 10,
-    //     position: 'relative',
-    //   }}
-    //   //@ts-ignore
-    //   ref={videoContainerRef}
-    // >
-
-    <MediaOutlet>
+    <div
+      className="video-container"
+      id="video-container"
+      style={{
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        maxWidth: 1500,
+        width: '100%',
+        marginTop: 10,
+        position: 'relative',
+      }}
+      //@ts-ignore
+      ref={videoContainerRef}
+    >
       <video
         ref={videoRef}
         //@ts-ignore
@@ -94,9 +90,7 @@ const ShakaPlayerExample: FC = () => {
         style={{ width: '100%', height: '100%' }} // Added ref attribute
         poster={videoThumbnail}
       />
-    </MediaOutlet>
-
-    // </div>
+    </div>
   );
 };
 
