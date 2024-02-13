@@ -43,6 +43,33 @@ const ShakaPlayerFairPlayExample: FC = () => {
             serverCertificate: fairplayCert,
           },
         },
+
+        /*
+        When playing HLS files using FairPlay DRM and installing PatchedMediaKeysApple with shaka.polyfill.PatchedMediaKeysApple.install();, 
+        the issue arises when executing shaka.util.FairPlayUtils.defaultGetContentId. 
+        When the initDataTypes is "skd" and the value contains "/", it is interpreted as a path. 
+        Consequently, only the portion before "/" is used as contentId, leading to authentication failure.
+
+        Configuring to execute the above function within player.configure resolves the issue, 
+        enabling proper license authentication and file playback. 
+        However, it seems that the problem of recognizing "/" as a path needs to be addressed.
+        */
+        initDataTransform: function (
+          data: ArrayBuffer | ArrayBufferView,
+          key: ArrayBuffer | ArrayBufferView | string,
+          certificate: ArrayBuffer | ArrayBufferView | null,
+        ) {
+          if ('skd' == key && certificate) {
+            //@ts-ignore
+            // Extract server certificate and content ID from the data URL
+            const serverCertificate = certificate.serverCertificate;
+            const url = shaka.util.StringUtils.fromBytesAutoDetect(data);
+            const contentId = url.substring(url.indexOf('skd://') + 6);
+            // Transform data using FairPlayUtils
+            data = shaka.util.FairPlayUtils.initDataTransform(data, contentId, serverCertificate);
+          }
+          return data;
+        },
       },
       streaming: {
         useNativeHlsOnSafari: true,

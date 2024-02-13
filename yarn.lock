@@ -5,6 +5,25 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@limeplay/core@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@limeplay/core@npm:1.1.1"
+  dependencies:
+    "@use-gesture/react": "npm:^10.2.25"
+    o9n: "npm:^2.1.1"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    screenfull: "npm:^6.0.2"
+    shaka-player: "npm:^4.3.8"
+  dependenciesMeta:
+    o9n:
+      optional: true
+    screenfull:
+      optional: true
+  checksum: efc7bce23327c13cf0974e0343030ba9504f5524115dab35b5a441a17e7769cee939328cdb539100f6cf01b8f10b7355d512bb2989ec49c938adbae32bff202f
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:14.0.2":
   version: 14.0.2
   resolution: "@next/env@npm:14.0.2"
@@ -85,11 +104,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^20":
-  version: 20.10.4
-  resolution: "@types/node@npm:20.10.4"
+  version: 20.11.17
+  resolution: "@types/node@npm:20.11.17"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 2c8b70cba731eb2ae3ae046daa74903bfcbb0e7b9196da767e5895054f6d252296ae7a04fb1dbbcb53bb004c4c658c05eaea2731bc9e2dd9e08f7e88d672f563
+  checksum: 1f30dae80b416cbf38f133a619ffb0e9fb9e7bc58f82d900bf73816ae5781740c4640892bf5971dd9c12570d5d05241646be3e7540bb4e059322ec6af4e51e15
   languageName: node
   linkType: hard
 
@@ -127,6 +146,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@use-gesture/core@npm:10.3.0":
+  version: 10.3.0
+  resolution: "@use-gesture/core@npm:10.3.0"
+  checksum: 7a92017fcc0a483043b2f202acd2b2e89ee3b81183a1537e5efd321cc18e36101c49c805d7932b5485c2fc3baa511eae759677c81cb77f149fa047616e78cfbd
+  languageName: node
+  linkType: hard
+
+"@use-gesture/react@npm:^10.2.25":
+  version: 10.3.0
+  resolution: "@use-gesture/react@npm:10.3.0"
+  dependencies:
+    "@use-gesture/core": "npm:10.3.0"
+  peerDependencies:
+    react: ">= 16.8.0"
+  checksum: 82e7a0149f05301b0363de0c5a29112adbf8e2740ba1a0e06756ee63fe44ab094dd54fe64df3bd8ec163ebad53a38f1e6156c0b454756bb2e3aee02a4444fcf1
+  languageName: node
+  linkType: hard
+
 "busboy@npm:1.6.0":
   version: 1.6.0
   resolution: "busboy@npm:1.6.0"
@@ -137,9 +174,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001406":
-  version: 1.0.30001566
-  resolution: "caniuse-lite@npm:1.0.30001566"
-  checksum: cd163075b1a9feaf9c9f657c3551279fcdac471471d67ee57ab2286c7b5480168e6336e359741b469fa40e94716f0f95ec185d87bd57d58894d66d8c21d7db04
+  version: 1.0.30001587
+  resolution: "caniuse-lite@npm:1.0.30001587"
+  checksum: c7a34cb758a24fa1d948e164de3c5873e7e607b46db0e530ba160a281cb619c9d6a1b85bb334894bc8e629a59db99f3de4521593b08142d317a529e80a856385
   languageName: node
   linkType: hard
 
@@ -264,6 +301,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nextjs-shaka-player-example@workspace:."
   dependencies:
+    "@limeplay/core": "npm:^1.1.1"
     "@types/node": "npm:^20"
     "@types/react": "npm:17.0.30"
     "@types/react-dom": "npm:18.0.5"
@@ -272,9 +310,16 @@ __metadata:
     react-device-detect: "npm:^2.2.3"
     react-dom: "npm:18.1.0"
     shaka-player: "npm:^4.6.2"
-    typescript: "npm:4.4.4"
+    typescript: "npm:^5"
   languageName: unknown
   linkType: soft
+
+"o9n@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "o9n@npm:2.1.1"
+  checksum: cfae60dac8bcfa223349ab758c27f764c83c71fa626d1659df4dbfa603d4b4a5580e586fdaa8f6bc82e8660ad4098f029eb61f091cc1c05f2544f9b333bf0253
+  languageName: node
+  linkType: hard
 
 "picocolors@npm:^1.0.0":
   version: 1.0.0
@@ -318,12 +363,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-dom@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "react-dom@npm:18.2.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+    scheduler: "npm:^0.23.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 66dfc5f93e13d0674e78ef41f92ed21dfb80f9c4ac4ac25a4b51046d41d4d2186abc915b897f69d3d0ebbffe6184e7c5876f2af26bfa956f179225d921be713a
+  languageName: node
+  linkType: hard
+
 "react@npm:18.1.0":
   version: 18.1.0
   resolution: "react@npm:18.1.0"
   dependencies:
     loose-envify: "npm:^1.1.0"
   checksum: 20592b045e82ce809c0fd76c63cb70a11a5e0905a569a08874043097fc1eab759e3a7681d36b3246464e97bab021c4a0d6490ee2fb79c55d176b94e8890ad93a
+  languageName: node
+  linkType: hard
+
+"react@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "react@npm:18.2.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: b562d9b569b0cb315e44b48099f7712283d93df36b19a39a67c254c6686479d3980b7f013dc931f4a5a3ae7645eae6386b4aa5eea933baa54ecd0f9acb0902b8
   languageName: node
   linkType: hard
 
@@ -336,12 +402,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shaka-player@npm:^4.6.2":
-  version: 4.7.1
-  resolution: "shaka-player@npm:4.7.1"
+"scheduler@npm:^0.23.0":
+  version: 0.23.0
+  resolution: "scheduler@npm:0.23.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: b777f7ca0115e6d93e126ac490dbd82642d14983b3079f58f35519d992fa46260be7d6e6cede433a92db70306310c6f5f06e144f0e40c484199e09c1f7be53dd
+  languageName: node
+  linkType: hard
+
+"screenfull@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "screenfull@npm:6.0.2"
+  checksum: e4accdb10410aa506dc10b3aa55b05f96421da8559ca3594c44e2cb80174d3a01819ea2b0e815797e24843844599f27778daa69d53bdb007f6bbd77c94e50d0d
+  languageName: node
+  linkType: hard
+
+"shaka-player@npm:^4.3.8, shaka-player@npm:^4.6.2":
+  version: 4.7.9
+  resolution: "shaka-player@npm:4.7.9"
   dependencies:
     eme-encryption-scheme-polyfill: "npm:^2.1.1"
-  checksum: 7a8f181ab91aaa089d5e19f03b183f65a27d9397f40a29be193d9d14ae910ede2f2c3d2905b426e8cb5d37b0d6de0f8105030aa769cb17a19b9b73023352508e
+  checksum: e8d01f97ef627e3443c1ca438c44454f0b998deaa921c8f14427640383f9dfef90da4cc7822d9f9a8b3ed1b4c17c2b601f2ba0056344a6f5be4271a70a4b33a1
   languageName: node
   linkType: hard
 
@@ -382,23 +464,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.4.4":
-  version: 4.4.4
-  resolution: "typescript@npm:4.4.4"
+"typescript@npm:^5":
+  version: 5.3.3
+  resolution: "typescript@npm:5.3.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 7cd160bbfdf99404238c296db0d56352c7e1d57e367f02640ca36f254f3fa47f74bfc76615e0010c2688a443d9e7403e2d26c79d98ab450d924b17c950732486
+  checksum: e33cef99d82573624fc0f854a2980322714986bc35b9cb4d1ce736ed182aeab78e2cb32b385efa493b2a976ef52c53e20d6c6918312353a91850e2b76f1ea44f
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A4.4.4#optional!builtin<compat/typescript>":
-  version: 4.4.4
-  resolution: "typescript@patch:typescript@npm%3A4.4.4#optional!builtin<compat/typescript>::version=4.4.4&hash=bbeadb"
+"typescript@patch:typescript@npm%3A^5#optional!builtin<compat/typescript>":
+  version: 5.3.3
+  resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 5eb1f150ac8d9a1bf79b971dcabe4158e10666d19733a1e9d36ea6b2c9f60e129889fe02c945b7b863d94749f582e633115a9dcb3c607e435246fdecb957dc27
+  checksum: e22df47df9b2b2f2617b8bf511a29aea3d177f9f7a0756818230a76b01cbd7da988bf55f9463aaa1a4c1ff90b80f8dc5676460d4e9dfc010572cbba59b822b0c
   languageName: node
   linkType: hard
 
